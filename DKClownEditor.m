@@ -48,7 +48,7 @@ static const void *kDKClownMsgKey = &kDKClownMsgKey;
         [input addAction:[UIAlertAction actionWithTitle:@"保存" style:UIAlertActionStyleDefault
                                                 handler:^(UIAlertAction *a) {
             NSString *v = input.textFields.firstObject.text ?: @"";
-            NS拉到Dictionary *entry = @{kDKClownEntryType: type, kDKClownEntryValue: v};
+            NSDictionary *entry = @{kDKClownEntryType: type, kDKClownEntryValue: v};
             [store setEntry:entry forKey:key];
         }]];
         [input addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
@@ -72,7 +72,7 @@ static const void *kDKClownMsgKey = &kDKClownMsgKey;
     [DKClownEditor.topPresenter presentViewController:ac animated:YES completion:nil];
 }
 
-#pragma mark - 顶层 VC (已修复编译报错)
+#pragma mark - 顶层 VC
 
 + (UIViewController *)topPresenter {
     UIWindow *keyWindow = nil;
