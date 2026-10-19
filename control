@@ -1,9 +1,9 @@
-Package: com.example.clownfeature
+Package: com.lingyangxue.clownfeature
 Name: ClownFeature
 Version: 1.0.0
 Architecture: iphoneos-arm
-Description: 小丑功能独立版：本机聊天文字/时间/图片/转账显示修改（学习用途）
-Maintainer: you
-Author: you
+Description: 小丑功能独立提取版
+Maintainer: lingyangxue
+Author: lingyangxue
 Section: Tweaks
 Depends: mobilesubstrate
