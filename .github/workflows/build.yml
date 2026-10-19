@@ -1,1 +1,40 @@
-git add . && git commit -m "init" && git push
+name: Build ClownFeature
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 选择 Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+
+      - name: 安装 Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git $HOME/theos
+          echo "THEOS=$HOME/theos" >> $GITHUB_ENV
+          # macOS 上 make package 需要 dpkg（打 deb）
+          brew install dpkg ldid || true
+
+      - name: 编译并打包
+        run: |
+          cd ClownFeature/ClownFeature
+          make package
+          ls -la packages/
+
+      - name: 上传 deb 产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: ClownFeature-deb
+          path: ClownFeature/ClownFeature/packages/*.deb
+
+      # 可选：打 tag 时自动发 Release
+      - name: 发布到 Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ClownFeature/ClownFeature/packages/*.deb
