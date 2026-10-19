@@ -21,7 +21,6 @@ jobs:
 
       - name: 编译并打包
         run: |
-          # 注意：这里没有 cd 进入子目录，直接在根目录编译
           make package FINALPACKAGE=1 2>&1
           ls -la packages/
 
