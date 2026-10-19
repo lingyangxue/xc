@@ -21,21 +21,12 @@ jobs:
 
       - name: 编译并打包
         run: |
-          cd ClownFeature/ClownFeature
-          echo "THEOS=$THEOS"
-          make package FINALPACKAGE=1 2>&1 | tee build.log
+          # 注意：这里没有 cd 进入子目录，直接在根目录编译
+          make package FINALPACKAGE=1 2>&1
           ls -la packages/
 
       - name: 上传 deb 产物
         uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: ClownFeature-deb
-          path: ClownFeature/ClownFeature/packages/*.deb
-
-      - name: 上传日志以供分析
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: build-log
-          path: ClownFeature/ClownFeature/build.log
+          path: packages/*.deb
